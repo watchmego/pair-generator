@@ -4,7 +4,6 @@ import './pairs.css';
 
 export const Pairs = () => {
 
-    let data;
     const [ file, setFile ] = useState();
     const handleFileChange = (e) => {
   if (e.target.files) {
@@ -30,19 +29,9 @@ export const Pairs = () => {
     let records = (response.data);
     console.log(records);
     let index = records.indexOf("\n");
-    const header = records.slice(0,index);
+    //const header = records.slice(0,index);
     records = records.slice(index+1, records.length);
     let array = records.split("\r\n");
-    let i = 0;
-    // while (records.length > 0) {
-    //     index = records.indexOf("\n") || records.length;
-    //     if(index === -1) {
-    //         index = records.length+5;
-    //     }
-    //     console.log('index', index);
-    //     array.push(records.slice(0, index));
-    //     records = records.slice(index+1, records.length);
-    // }
     console.log("records", array);
     let pairs = await PairCreator(array);
     exportCSV(pairs);
