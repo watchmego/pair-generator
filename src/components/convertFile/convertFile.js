@@ -6,13 +6,14 @@ import { PairCreator, exportCSV } from "../pairCreator";
 import { PairsContext } from "../../App";
 import "./convertFile.css";
 
-const url = 'http://192.168.178.33:8000/upload';
+//const url = 'http://192.168.178.33:8000/upload';
+const url = 'https://httpbin.org/post';
 const formData = new FormData();
-// const config = {
-//     headers: {
-//         'content-type': 'multipart/form-data',
-//     },
-// };
+const config = {
+    headers: {
+        'content-type': 'multipart/form-data',
+    },
+};
 
 function CircularProgressWithLabel(props) {
     return (
@@ -62,6 +63,7 @@ export const ConvertFile = () => {
         
         formData.set('csv', file);
         const response = await axios.post(url, formData, {
+            ...config,
             onUploadProgress: (progressEvent) => {
                 setProgress(progressEvent.loaded / progressEvent.total * 100);
             }
