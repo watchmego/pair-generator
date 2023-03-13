@@ -1,9 +1,13 @@
 import axios from "axios";
-import { useEffect } from 'react';
+import { useContext } from 'react';
 import { PairCreator, exportCSV } from "../pairCreator";
+import { PairsContext } from "../../App";
 import "./convertFile.css";
 
-export const ConvertFile = ({file}) => {
+export const ConvertFile = () => {
+    
+    const [file] = useContext(PairsContext);
+
     const handleUploadClick = async (e) => {
         e.preventDefault();
         console.log('upload called', e)

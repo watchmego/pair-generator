@@ -1,10 +1,17 @@
+import { ThemeContext } from "@emotion/react";
+import { createContext, useState } from "react";
 import { Pairs } from "./components/pairs";
 
+export const PairsContext = createContext(null);
+
 function App() {
+
+  const [file, setFile] = useState(null);
+
   return (
-    <div>
+    <PairsContext.Provider value={[file, setFile]}>
       <Pairs />
-    </div>
+    </PairsContext.Provider>
   );
 }
 
