@@ -1,4 +1,3 @@
-import { ThemeContext } from "@emotion/react";
 import { createContext, useState } from "react";
 import { Pairs } from "./components/pairs";
 
