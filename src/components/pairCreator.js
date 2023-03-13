@@ -3,27 +3,39 @@ export const PairCreator = async (data) => {
     
     //data.splice(0,1);
     pairs[0] = ["P1", "P1 Email", "P2", "P2 Email"];
-    console.log(data[0], data.length);
     const len = data.length / 2;
     let random;
-    let pair;
+    let previousPair;
     for(let i = 1; i <= len; i++) {
-        console.log(data)
-        pairs[i] = data.splice(0, 1);
-        for(let j = 0; j < len; j++) {
+
+        pairs[i] = [data[0][0], data[0][1]];
+        previousPair = data[0][2];
+        data.splice(0, 1);
+
+        for(let j = 0; j < 10; j++) {
             random = Math.floor(Math.random() * data.length);
+
             try {
-                if(data[random][1] !== data[0][2] && data[random].length > 10) {
-                    pairs[i][1] = data[random];
+                if(!data[random]) {
+                    data.splice(random, random+1)
+                } else if(data[random] && data[random][1] !== previousPair && data[random][1].length > 10) {
+                    pairs[i].push(data[random][0], data[random][1]);
+                    pairs[i].flat();
                     data.splice(random, 1);
-                    //data = data.slice(1, len);
                     break;
                 }
-            } catch (e) {console.log('errored')};
+            } catch (e) {console.log('errored',e)};
         }
-        console.log('pairs', pairs)
-        
-        
+        console.table(pairs);
+        if(!pairs[i][3]) {
+            console.log('conflict');
+            pairs[i][2] = pairs[1][2];
+            pairs[i][3] = pairs[1][3];
+            pairs[1][2] = data[random][0];
+            pairs[1][3] = data[random][1];
+
+        }
+       console.table(pairs);
     }
     return pairs;
 }
