@@ -34,6 +34,7 @@ export const SelectFile = () => {
                     </Button>
                 </Grid>
             </Grid>
+            <div>No data is stored or cached by the server. Source code available here: <a href="https://github.com/watchmego/pair-generator/">source</a></div>
             
         </div>
     )
