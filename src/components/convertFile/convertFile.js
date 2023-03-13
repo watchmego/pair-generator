@@ -1,18 +1,18 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Button, Stack, CircularProgress, Box, Typography } from "@mui/material";
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { PairCreator, exportCSV } from "../pairCreator";
 import { PairsContext } from "../../App";
 import "./convertFile.css";
 
 const url = 'http://192.168.178.33:8000/upload';
 const formData = new FormData();
-const config = {
-    headers: {
-        'content-type': 'multipart/form-data',
-    },
-};
+// const config = {
+//     headers: {
+//         'content-type': 'multipart/form-data',
+//     },
+// };
 
 function CircularProgressWithLabel(props) {
     return (
@@ -75,6 +75,7 @@ export const ConvertFile = () => {
           if(row.indexOf("@") > -1) {
             return row.split(",");
           }
+          return undefined;
         })
         console.table(test);
         let pairs = await PairCreator(test);
