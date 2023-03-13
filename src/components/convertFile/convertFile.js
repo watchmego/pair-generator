@@ -68,7 +68,7 @@ export const ConvertFile = () => {
                 setProgress(progressEvent.loaded / progressEvent.total * 100);
             }
         });
-        let records = (response.data);
+        let records = (response.data.files.csv);
         let index = records.indexOf("\n");
         //const header = records.slice(0,index);
         records = records.slice(index+1, records.length);
@@ -79,7 +79,6 @@ export const ConvertFile = () => {
           }
           return undefined;
         })
-        console.table(test);
         let pairs = await PairCreator(test);
         exportCSV(pairs);
         

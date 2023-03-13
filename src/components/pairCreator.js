@@ -26,16 +26,13 @@ export const PairCreator = async (data) => {
                 }
             } catch (e) {console.log('errored',e)};
         }
-        console.table(pairs);
         if(!pairs[i][3]) {
-            console.log('conflict');
             pairs[i][2] = pairs[1][2];
             pairs[i][3] = pairs[1][3];
             pairs[1][2] = data[random][0];
             pairs[1][3] = data[random][1];
 
         }
-       console.table(pairs);
     }
     return pairs;
 }
@@ -44,7 +41,6 @@ export const exportCSV = (newPairs) => {
     let file;
     let fName = "pairs.csv";
     if(newPairs) {
-        console.log(newPairs);
         file = newPairs.join("\r\n");
     } else {
         //file = ["P1", "P1 Email", "P2", "P2 Email\r\n" ]
