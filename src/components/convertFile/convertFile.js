@@ -8,7 +8,7 @@ import "./convertFile.css";
 
 //const url = 'http://192.168.178.33:8000/upload';
 const url = 'https://httpbin.org/post';
-const formData = new FormData();
+const fileData = new FormData();
 const config = {
     headers: {
         'content-type': 'multipart/form-data',
@@ -54,15 +54,18 @@ export const ConvertFile = () => {
     const [file] = useContext(PairsContext);
     const [progress, setProgress] = useState(0);
 
+    const errorCheck = (file) => {
+      console.log('error check');
+    }
     const handleUploadClick = async (e) => {
         e.preventDefault();
         if (!file) {
             return;
         }
         // 👇 Uploading the file using the fetch API to the server
-        
-        formData.set('csv', file);
-        const response = await axios.post(url, formData, {
+        errorCheck(file);
+        fileData.set('csv', file);
+        const response = await axios.post(url, fileData, {
             ...config,
             onUploadProgress: (progressEvent) => {
                 setProgress(progressEvent.loaded / progressEvent.total * 100);
@@ -70,9 +73,8 @@ export const ConvertFile = () => {
         });
         let records = (response.data.files.csv);
         let index = records.indexOf("\n");
-        //const header = records.slice(0,index);
         records = records.slice(index+1, records.length);
-        let rows = records.split("\r\n");
+        let rows = records.split(/\\?n?\\r/);
         let test = rows.map(row => {
           if(row.indexOf("@") > -1) {
             return row.split(",");

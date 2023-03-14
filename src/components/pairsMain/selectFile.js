@@ -1,17 +1,29 @@
-import { useContext } from "react";
-import { Button, Grid } from '@mui/material';
+import { useContext, useState } from "react";
+import { Button, Grid, Dialog, DialogContent, DialogContentText } from '@mui/material';
 import { exportCSV } from "../pairCreator";
 import { PairsContext } from "../../App";
 
 export const SelectFile = () => {
 
     const [file, setFile] = useContext(PairsContext);
-    const handleFileChange = (e) => {
-        console.log('file selected');
+    const [error, setError] = useState(null);
+    const [open, setOpen] = useState(false);
 
-        if (e.target.files) {
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleFileChange = (e) => {
+        const regex = /.*csv$/;
+        if(!e.target.files[0].name.match(regex)) {
+          setError("Please choose a valid CSV file");
+          setOpen(true);
+        } else if (e.target.files) {
             setFile(e.target.files[0]);
-            console.log(file);
         }
     };
 
@@ -35,7 +47,19 @@ export const SelectFile = () => {
                 </Grid>
             </Grid>
             <div>No data is stored or cached by the server. Source code available here: <a href="https://github.com/watchmego/pair-generator/">source</a></div>
-            
+            <Dialog 
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {error}
+                    </DialogContentText>
+                </DialogContent>
+                </Dialog>
+
         </div>
     )
 
