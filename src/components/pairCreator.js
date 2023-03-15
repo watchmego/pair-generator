@@ -1,11 +1,10 @@
 export const PairCreator = async (data) => {
-    let pairs = [];
     
     //data.splice(0,1);
-    pairs[0] = ["P1", "P1 Email", "P2", "P2 Email"];
+    let pairs = [["P1", "P1 Email", "P2", "P2 Email"]];
     const len = data.length / 2;
-    let random;
-    let previousPair;
+    let random, previousPair;
+
     for(let i = 1; i <= len; i++) {
         console.log(len);
         pairs[i] = [data[0][0], data[0][1]];
@@ -16,9 +15,7 @@ export const PairCreator = async (data) => {
             random = Math.floor(Math.random() * data.length);
 
             try {
-                if(!data[random]) {
-                    data.splice(random, random+1)
-                } else if(data[random] && data[random][1] !== previousPair && data[random][1].length > 10) {
+                if(data[random] && data[random][1] !== previousPair && data[random][1].length > 10) {
                     pairs[i].push(data[random][0], data[random][1]);
                     pairs[i].flat();
                     data.splice(random, 1);
