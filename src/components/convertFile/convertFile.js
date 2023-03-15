@@ -2,7 +2,8 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { Button, Stack, CircularProgress, Box, Typography } from "@mui/material";
 import { useContext, useState } from 'react';
-import { PairCreator, exportCSV } from "../pairCreator";
+import { PairCreator } from "../pairCreator/pairCreator";
+import { exportCSV } from '../exportCSV/exportCSV'
 import { PairsContext } from "../../App";
 import "./convertFile.css";
 
@@ -15,6 +16,7 @@ const config = {
     },
 };
 
+//function to show a circular progress box for the file upload
 function CircularProgressWithLabel(props) {
     return (
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
@@ -48,45 +50,43 @@ function CircularProgressWithLabel(props) {
     value: PropTypes.number.isRequired,
   };
   
-
+//function used to upload and convert file
 export const ConvertFile = () => {
     
     const {file} = useContext(PairsContext);
     const [progress, setProgress] = useState(0);
 
-    //Future feature, error checking file:
+    //Future feature to error check file:
     const errorCheck = (file) => {
     }
 
+    //when upload is clicked...
     const handleUploadClick = async (e) => {
+        //not sure if necessary, using to prevent unexpected behaviour
         e.preventDefault();
-        if (!file) {
-            return;
-        }
-        // 👇 Uploading the file using the fetch API to the server
+
+        //error check (future feature)
         errorCheck(file);
+        //set formData to include file
         fileData.set('csv', file);
+        // 👇 Uploading the file using the fetch API to the server
         const response = await axios.post(url, fileData, {
             ...config,
             onUploadProgress: (progressEvent) => {
                 setProgress(progressEvent.loaded / progressEvent.total * 100);
             }
         });
-        
-        let rows = response.data.files.csv.split(/\r?\n/);
-        
-        let data = rows.reduce((allRows, currRow) => {
-          if (currRow.indexOf("@") > -1) {
-            let split = currRow.split(",");
-            return [
-              ...allRows,
-              split
-            ]
-          }
-          return allRows;
-        },[])
 
+        //split csv into array of arrays, discard rows without an email address
+        let data = response.data.files.csv
+                    .split(/\r?\n/)
+                    .filter(row => row.includes('@'))
+                    .map(row => row.split(','));
+
+        //create pairs from data
         let pairs = await PairCreator(data);
+
+        //export/download CSV
         exportCSV(pairs);
         
         
