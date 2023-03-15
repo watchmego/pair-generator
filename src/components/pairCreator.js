@@ -28,16 +28,10 @@ export const PairCreator = async (data) => {
         }
         if(!pairs[i][3]) {
             console.log('conflict');
-            // console.log(pairs[i][2], pairs[i][3]);
-            // [pairs[i][2], pairs[i][3]] = [pairs[1][2], pairs[1][3]];
-            // console.log(pairs[i][2], pairs[i][3]);
-            pairs[i][2] = pairs[1][2];
-            pairs[i][3] = pairs[1][3];
-            // console.log(pairs[1][2], pairs[1][3])
-            // [pairs[1][2], pairs[1][3]] = [data[random][0], data[random][1]];
-            pairs[1][2] = data[random][0]
-            pairs[1][3] = data[random][1];
-            // console.log(pairs[1][2], pairs[1][3])
+            console.log(pairs[i], pairs[1]);
+            [pairs[i][2], pairs[i][3]] = [pairs[1][2], pairs[1][3]];
+            [pairs[1][2], pairs[1][3]] = [data[random][0], data[random][1]];
+            console.log(pairs[i], pairs[1]);
 
         }
     }
