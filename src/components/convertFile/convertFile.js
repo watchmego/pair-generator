@@ -51,12 +51,13 @@ function CircularProgressWithLabel(props) {
 
 export const ConvertFile = () => {
     
-    const [file] = useContext(PairsContext);
+    const {file} = useContext(PairsContext);
     const [progress, setProgress] = useState(0);
 
+    //Future feature, error checking file:
     const errorCheck = (file) => {
-      console.log('error check');
     }
+
     const handleUploadClick = async (e) => {
         e.preventDefault();
         if (!file) {
@@ -75,10 +76,8 @@ export const ConvertFile = () => {
         let rows = response.data.files.csv.split(/\r?\n/);
         
         let data = rows.reduce((allRows, currRow) => {
-          console.log(currRow);
           if (currRow.indexOf("@") > -1) {
             let split = currRow.split(",");
-            console.log(split);
             return [
               ...allRows,
               split

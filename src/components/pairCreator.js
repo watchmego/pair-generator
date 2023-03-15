@@ -6,7 +6,6 @@ export const PairCreator = async (data) => {
     const len = data.length / 2;
     let random;
     let previousPair;
-    console.log(data)
     for(let i = 1; i <= len; i++) {
 
         pairs[i] = [data[0][0], data[0][1]];
@@ -28,10 +27,17 @@ export const PairCreator = async (data) => {
             } catch (e) {console.log('errored',e)};
         }
         if(!pairs[i][3]) {
+            console.log('conflict');
+            // console.log(pairs[i][2], pairs[i][3]);
+            // [pairs[i][2], pairs[i][3]] = [pairs[1][2], pairs[1][3]];
+            // console.log(pairs[i][2], pairs[i][3]);
             pairs[i][2] = pairs[1][2];
             pairs[i][3] = pairs[1][3];
-            pairs[1][2] = data[random][0];
+            // console.log(pairs[1][2], pairs[1][3])
+            // [pairs[1][2], pairs[1][3]] = [data[random][0], data[random][1]];
+            pairs[1][2] = data[random][0]
             pairs[1][3] = data[random][1];
+            // console.log(pairs[1][2], pairs[1][3])
 
         }
     }

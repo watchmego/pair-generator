@@ -8,7 +8,7 @@ function App() {
   const [file, setFile] = useState(null);
 
   return (
-    <PairsContext.Provider value={[file, setFile]}>
+    <PairsContext.Provider value={{file, setFile}}>
       <Pairs />
     </PairsContext.Provider>
   );

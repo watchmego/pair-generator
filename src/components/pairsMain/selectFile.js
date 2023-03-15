@@ -5,7 +5,8 @@ import { PairsContext } from "../../App";
 
 export const SelectFile = () => {
 
-    const [setFile] = useContext(PairsContext);
+
+    const {setFile} = useContext(PairsContext);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
 

@@ -7,7 +7,7 @@ import './pairs.css';
 
 export const Pairs = () => {
 
-    const [file] = useContext(PairsContext);
+    const {file} = useContext(PairsContext);
 
     return(
         <div className="importMain">
