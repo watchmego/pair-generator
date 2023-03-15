@@ -7,7 +7,7 @@ export const PairCreator = async (data) => {
     let random;
     let previousPair;
     for(let i = 1; i <= len; i++) {
-
+        console.log(len);
         pairs[i] = [data[0][0], data[0][1]];
         previousPair = data[0][2];
         data.splice(0, 1);
@@ -27,14 +27,15 @@ export const PairCreator = async (data) => {
             } catch (e) {console.log('errored',e)};
         }
         if(!pairs[i][3]) {
-            console.log('conflict');
-            console.log(pairs[i], pairs[1]);
             [pairs[i][2], pairs[i][3]] = [pairs[1][2], pairs[1][3]];
             [pairs[1][2], pairs[1][3]] = [data[random][0], data[random][1]];
-            console.log(pairs[i], pairs[1]);
-
         }
+
     }
+    if(len % 1 > 0) {
+        pairs.push([data[0][0], data[0][1], `Error: Uneven number of participants, unable to pair ${data[0][0]}`]);
+    }
+    console.table(pairs)
     return pairs;
 }
 
