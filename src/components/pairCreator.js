@@ -33,7 +33,7 @@ export const PairCreator = async (data) => {
 
     }
     if(len % 1 > 0) {
-        pairs.push([data[0][0], data[0][1], `Error: Uneven number of participants, unable to pair ${data[0][0]}`]);
+        pairs.push([data[0][0], data[0][1], `Error: Uneven number of participants; unable to pair ${data[0][0]}`]);
     }
 
     return pairs;
