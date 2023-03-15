@@ -6,6 +6,7 @@ export const PairCreator = async (data) => {
     const len = data.length / 2;
     let random;
     let previousPair;
+    console.log(data)
     for(let i = 1; i <= len; i++) {
 
         pairs[i] = [data[0][0], data[0][1]];

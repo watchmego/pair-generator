@@ -71,17 +71,23 @@ export const ConvertFile = () => {
                 setProgress(progressEvent.loaded / progressEvent.total * 100);
             }
         });
-        let records = (response.data.files.csv);
-        let index = records.indexOf("\n");
-        records = records.slice(index+1, records.length);
-        let rows = records.split(/\\?n?\\r/);
-        let test = rows.map(row => {
-          if(row.indexOf("@") > -1) {
-            return row.split(",");
+        
+        let rows = response.data.files.csv.split(/\r?\n/);
+        
+        let data = rows.reduce((allRows, currRow) => {
+          console.log(currRow);
+          if (currRow.indexOf("@") > -1) {
+            let split = currRow.split(",");
+            console.log(split);
+            return [
+              ...allRows,
+              split
+            ]
           }
-          return undefined;
-        })
-        let pairs = await PairCreator(test);
+          return allRows;
+        },[])
+
+        let pairs = await PairCreator(data);
         exportCSV(pairs);
         
         
