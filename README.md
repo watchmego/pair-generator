@@ -7,7 +7,7 @@ Built by request to streamline a process to pair up new staff with existing to i
 Import a CSV of people and it will randomly pair them up and export them.
 
 Features:
-- Export Template to ensure data is in the right format
+- Exportable Template to ensure data is in the right format
 - Checks previous pairing and prevents re-pairing with the same person
 - Advises if there is an odd number of people & returns the person that couldn't be paired
 
